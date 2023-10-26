@@ -1,11 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
+import Cookies from 'js-cookie';
 
 interface IState {
-  value: string | null;
+  value: string | undefined;
 }
 
-const initialState: IState = { value: null };
+const initialState: IState = { value: Cookies.get('token') };
 
 export const tokenSlice = createSlice({
   name: 'token',
@@ -13,7 +14,7 @@ export const tokenSlice = createSlice({
   initialState,
   reducers: {
     logout: (state) => {
-      state.value = null;
+      state.value = undefined;
     },
 
     login: (state, action: PayloadAction<string>) => {
