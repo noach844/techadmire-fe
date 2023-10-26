@@ -2,8 +2,9 @@ import { useDispatch } from 'react-redux';
 import Cookies from 'js-cookie';
 import { useDispatch } from 'react-redux';
 import { login, logout } from '../redux/slices/tokenSlice';
-import { loginAPI } from '../api/authAPI';
+import { loginAPI, reg, registerAPI } from '../api/authAPI';
 import moment from 'moment-timezone';
+import { IRegisterPayload } from './../api/authAPI';
 
 export function useAuth() {
   const dispatch = useDispatch();
@@ -24,8 +25,23 @@ export function useAuth() {
     Cookies.remove('token');
   };
 
+  const signup = async ({
+    username,
+    firstname,
+    lastname,
+    password,
+  }: IRegisterPayload) => {
+    await registerAPI({
+      username,
+      lastname,
+      firstname,
+      password,
+    });
+  };
+
   return {
     signin,
+    signup,
     signout,
   };
 }

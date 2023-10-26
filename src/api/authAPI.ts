@@ -1,18 +1,18 @@
 import { AxiosResponse } from 'axios';
 import { createHTTPClient } from './httpClient';
 
-interface loginPayload {
+interface LoginPayload {
   username: string;
   password: string;
 }
 
-interface loginResponse {
+interface ILoginResponse {
   accessToken: string;
   tokenType: string;
   expiration: string;
 }
 
-interface registerPayload {
+export interface IRegisterPayload {
   username: string;
   firstname: string;
   lastname: string;
@@ -22,8 +22,8 @@ interface registerPayload {
 const authURL = `${import.meta.env.VITE_SERVER_URL}/auth`;
 const authClient = createHTTPClient(authURL);
 
-const loginAPI = async (payload: loginPayload) => {
-  const res: AxiosResponse<loginResponse> = await authClient.post(
+const loginAPI = async (payload: LoginPayload) => {
+  const res: AxiosResponse<ILoginResponse> = await authClient.post(
     '/login',
     payload
   );
@@ -34,7 +34,7 @@ const loginAPI = async (payload: loginPayload) => {
   };
 };
 
-const register = async (payload: registerPayload) => {
+const registerAPI = async (payload: IRegisterPayload) => {
   try {
     await authClient.post('/register', payload);
   } catch (err) {
@@ -48,4 +48,4 @@ const getUserDetials = async (token: string) => {
   ).data;
 };
 
-export { loginAPI, register, getUserDetials };
+export { loginAPI, registerAPI, getUserDetials };

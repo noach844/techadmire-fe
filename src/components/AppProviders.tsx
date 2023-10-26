@@ -9,7 +9,7 @@ const queryClient = new QueryClient();
 
 export const AppProviders = ({ children }: IProps) => {
   return (
-    <MantineProvider>
+    <MantineProvider defaultColorScheme='dark'>
       <QueryClientProvider client={queryClient}>
         <Provider store={store}>{children}</Provider>
       </QueryClientProvider>
