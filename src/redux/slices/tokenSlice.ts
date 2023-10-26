@@ -1,7 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
-const initialState: string | null = null;
+interface IState {
+  value: string | null;
+}
+
+const initialState: IState = { value: null };
 
 export const tokenSlice = createSlice({
   name: 'token',

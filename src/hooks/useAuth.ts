@@ -4,15 +4,10 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { login, logout } from '../redux/slices/tokenSlice';
 import { loginAPI } from '../api/authAPI';
-import moment from 'moment';
-
-interface ISignIn {
-  username: string;
-  password: string;
-}
+import moment from 'moment-timezone';
 
 export function useAuth() {
-  const token = useSelector(() => state.token.value);
+  const token = useSelector((state) => state.token.value);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -20,12 +15,12 @@ export function useAuth() {
     cookieToken ? dispatch(login(cookieToken)) : null;
   });
 
-  const signin = async ({ username, password }: ISignIn) => {
+  const signin = async (username: string, password: string) => {
     const resToken = await loginAPI({ username, password });
     Cookies.set('token', resToken.token, {
       expires: moment(
-        resToken.expiration,
-        'ddd MMM DD HH:mm:ss zzz YYYY'
+        resToken.expiration + 'Z',
+        'ddd MMM DD HH:mm:ss zzz YYYYZ'
       ).toDate(),
     });
     dispatch(login(resToken.token));
