@@ -3,6 +3,7 @@ import { RequireAuth } from './components/RequiredAuth';
 import { Sign } from './pages/SignPage/Sign';
 import { useSelector } from 'react-redux';
 import './App.css';
+import { Home } from './pages/Home/Home';
 
 function App() {
   const token = useSelector((state) => state.token.value);
@@ -21,9 +22,7 @@ function App() {
           path='/'
           element={
             <RequireAuth>
-              <>
-                <h1>Home</h1>
-              </>
+              <Home />
             </RequireAuth>
           }
         />

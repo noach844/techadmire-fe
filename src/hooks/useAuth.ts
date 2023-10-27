@@ -2,7 +2,9 @@ import { useDispatch } from 'react-redux';
 import Cookies from 'js-cookie';
 import { useDispatch } from 'react-redux';
 import { login, logout } from '../redux/slices/tokenSlice';
-import { loginAPI, reg, registerAPI } from '../api/authAPI';
+import { logoutUser, setUser } from '../redux/slices/userSlice';
+import { loginAPI, registerAPI } from '../api/authAPI';
+import { getUserDetails } from '../api/userAPI';
 import moment from 'moment-timezone';
 import { IRegisterPayload } from './../api/authAPI';
 
@@ -17,11 +19,13 @@ export function useAuth() {
         'ddd MMM DD HH:mm:ss zzz YYYYZ'
       ).toDate(),
     });
-    dispatch(login(resToken.token));
+    await dispatch(login(resToken.token));
+    loadUserDetails(resToken.token);
   };
 
   const signout = () => {
     dispatch(logout());
+    dispatch(logoutUser());
     Cookies.remove('token');
   };
 
@@ -39,9 +43,15 @@ export function useAuth() {
     });
   };
 
+  const loadUserDetails = async (token: string) => {
+    const resUser = await getUserDetails(token);
+    dispatch(setUser(resUser));
+  };
+
   return {
     signin,
     signup,
     signout,
+    loadUserDetails,
   };
 }

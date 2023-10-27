@@ -95,6 +95,7 @@ export const SignUp = ({ toggleIsMember }) => {
             </a>
           </a>
           <Button
+            style={{ alignSelf: 'flex-end' }}
             type='submit'
             w='25%'
             rightSection={<IconArrowRight size={14} />}

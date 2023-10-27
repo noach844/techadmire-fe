@@ -42,10 +42,4 @@ const registerAPI = async (payload: IRegisterPayload) => {
   }
 };
 
-const getUserDetials = async (token: string) => {
-  return (
-    await authClient.get('/user-details', { headers: { Authorization: token } })
-  ).data;
-};
-
 export { loginAPI, registerAPI, getUserDetials };
